@@ -1,11 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-/// id: "6c84fb90-12c4-11e1-840d-7b25c5ee775a"
-/// content : "Do the launchdry"
-/// status : 0
-/// createdAt : "2021-05-25T12:00:00.000Z"
-/// updatedAt : "2021-05-25T12:00:00.000Z"
 
 part 'task.g.dart';
 

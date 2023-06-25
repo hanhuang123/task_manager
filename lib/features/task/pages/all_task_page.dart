@@ -37,7 +37,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
               children: [
                 const SizedBox(height: 16.0),
                 Text(
-                  'Tasks',
+                  '事項',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         color: ColorName.primary,
                         fontWeight: FontWeight.bold,
@@ -47,6 +47,11 @@ class _AllTaskPageState extends State<AllTaskPage> {
                 Expanded(
                   child: BlocConsumer<AllTaskBloc, TaskState>(
                     listener: (context, state) {
+                      if (state is TaskDeletedSuccess  || state is TaskDeletedSuccess) {
+                        context.read<AllTaskBloc>().add(const TaskFetched());
+                        context.read<CompleteTaskBloc>().add(const TaskFetched(isDone: true));
+                        context.read<IncompleteTaskBloc>().add(const TaskFetched(isDone: false));
+                      }
                       if (state is TaskCreatedSuccess || state is TaskUpdatedSuccess) {
                         context.read<AllTaskBloc>().add(const TaskFetched());
                         context.read<CompleteTaskBloc>().add(const TaskFetched(isDone: true));
@@ -60,7 +65,7 @@ class _AllTaskPageState extends State<AllTaskPage> {
                     builder: (context, state) {
                       if (state is TaskFetchedSuccess) {
                         if (state.tasks.isEmpty) {
-                          return const EmptyTaskWidget(message: "There's no task yet!\n Add a new Task ✨");
+                          return const EmptyTaskWidget(message: "");
                         }
 
                         return ListTask(
@@ -70,6 +75,8 @@ class _AllTaskPageState extends State<AllTaskPage> {
                               id: id,
                               isDone: value,
                             ));
+                          },onDeleteTap: (id) {
+                            context.read<AllTaskBloc>().add(TaskDeleted(id));
                           },
                         );
                       } else if (state is TaskFetchedFailure) {

@@ -50,9 +50,9 @@ class TaskTabPage extends StatelessWidget with AutoRouteWrapper {
             unselectedFontSize: 14.0,
             onTap: (index) => tabsRouter.setActiveIndex(index),
             items: const [
-              BottomNavigationBarItem(label: 'All', icon: Icon(Icons.checklist_rounded)),
-              BottomNavigationBarItem(label: 'Complete', icon: Icon(Icons.check_circle_outline_rounded)),
-              BottomNavigationBarItem(label: 'Incomplete', icon: Icon(Icons.radio_button_unchecked_rounded)),
+              BottomNavigationBarItem(label: '全部', icon: Icon(Icons.checklist_rounded)),
+              BottomNavigationBarItem(label: '完成', icon: Icon(Icons.check_circle_outline_rounded)),
+              BottomNavigationBarItem(label: '未完成', icon: Icon(Icons.radio_button_unchecked_rounded)),
             ],
           ),
         );

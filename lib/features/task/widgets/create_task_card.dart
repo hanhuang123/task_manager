@@ -49,7 +49,7 @@ class _CreateTaskCardState extends State<CreateTaskCard> {
                 maxLines: 5,
                 minLines: 1,
                 decoration: InputDecoration(
-                  hintText: 'Add a Task',
+                  hintText: '新增事項',
                   hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(color: ColorName.primary),
                   contentPadding: const EdgeInsets.fromLTRB(20.0, 8.0, 0.0, 8.0),
                   border: InputBorder.none,
@@ -70,7 +70,7 @@ class _CreateTaskCardState extends State<CreateTaskCard> {
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                       child: Text(
-                        'Add',
+                        '加入',
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(
                               color: ColorName.primary,
                               fontWeight: FontWeight.bold,

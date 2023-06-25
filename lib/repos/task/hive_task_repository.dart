@@ -19,6 +19,21 @@ class HiveTaskRepository implements ITaskRepository {
     return await saveTask(task: task);
   }
 
+  @override
+  Future<Result<void, Failure>> deleteTask({required String id}) async {
+    if (!_taskBox.isOpen) {
+      return const Result.failure(DatabaseFailure());
+    }
+
+    if (!_taskBox.containsKey(id)) {
+      return const Result.failure(NotFoundFailure());
+    }
+
+    await _taskBox.delete(id);
+
+    return const Result.success(null);
+  }
+
   Future<Result<Task, Failure>> saveTask({required Task task}) async {
     if (!_taskBox.isOpen) {
       return const Result.failure(DatabaseFailure());
@@ -36,9 +51,7 @@ class HiveTaskRepository implements ITaskRepository {
   }
 
   @override
-  Future<Result<List<Task>, Failure>> getTasks({
-    bool? isDone,
-  }) async {
+  Future<Result<List<Task>, Failure>> getTasks({bool? isDone}) async {
     if (!_taskBox.isOpen) {
       return const Result.failure(DatabaseFailure());
     }

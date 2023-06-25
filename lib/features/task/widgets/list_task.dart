@@ -5,11 +5,13 @@ import 'package:todo/models/task.dart';
 class ListTask extends StatelessWidget {
   final List<Task> tasks;
   final void Function(String id, bool value)? onCheckBoxTap;
+  final void Function(String taskId)? onDeleteTap;
 
   const ListTask({
     Key? key,
     required this.tasks,
     this.onCheckBoxTap,
+    this.onDeleteTap,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class ListTask extends StatelessWidget {
           key: UniqueKey(),
           task: task,
           onCheckBoxTap: (value) => onCheckBoxTap?.call(task.id, value),
+          onDeleteTap: () => onDeleteTap?.call(task.id),
         );
       },
       separatorBuilder: (context, index) => const SizedBox(height: 4.0),
@@ -28,3 +31,4 @@ class ListTask extends StatelessWidget {
     );
   }
 }
+

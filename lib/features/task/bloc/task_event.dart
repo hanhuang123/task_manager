@@ -37,3 +37,13 @@ class TaskUpdated extends TaskEvent {
   @override
   List<Object?> get props => [id, content, isDone];
 }
+
+class TaskDeleted extends TaskEvent {
+  final String taskId;
+
+  const TaskDeleted(this.taskId);
+
+  @override
+  List<Object?> get props => [taskId];
+}
+

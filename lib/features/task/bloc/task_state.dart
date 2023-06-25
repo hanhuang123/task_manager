@@ -89,3 +89,27 @@ class TaskUpdatedFailure extends TaskState {
   @override
   List<Object?> get props => [message];
 }
+
+// TaskDeleted
+class TaskDeletedInProgress extends TaskState {
+  const TaskDeletedInProgress();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TaskDeletedSuccess extends TaskState {
+  const TaskDeletedSuccess();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TaskDeletedFailure extends TaskState {
+  final String? message;
+
+  const TaskDeletedFailure({this.message});
+
+  @override
+  List<Object?> get props => [message];
+}

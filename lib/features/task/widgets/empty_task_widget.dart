@@ -13,7 +13,7 @@ class EmptyTaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        message ?? "There's nothing here  😶",
+        message ?? "",
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: ColorName.primary,

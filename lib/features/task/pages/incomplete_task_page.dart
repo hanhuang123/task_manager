@@ -34,7 +34,7 @@ class _IncompleteTaskPageState extends State<IncompleteTaskPage> {
           children: [
             const SizedBox(height: 16.0),
             Text(
-              'Incomplete',
+              '未完成',
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: ColorName.primary,
                     fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class _IncompleteTaskPageState extends State<IncompleteTaskPage> {
             Expanded(
               child: BlocConsumer<IncompleteTaskBloc, TaskState>(
                 listener: (context, state) {
-                  if (state is TaskCreatedSuccess || state is TaskUpdatedSuccess) {
+                  if (state is TaskCreatedSuccess || state is TaskUpdatedSuccess || state is TaskDeletedSuccess) {
                     context.read<AllTaskBloc>().add(const TaskFetched());
                     context.read<CompleteTaskBloc>().add(const TaskFetched(isDone: true));
                     context.read<IncompleteTaskBloc>().add(const TaskFetched(isDone: false));
@@ -67,7 +67,9 @@ class _IncompleteTaskPageState extends State<IncompleteTaskPage> {
                               id: id,
                               isDone: value,
                             ));
-                      },
+                      },onDeleteTap: (id) {
+                      context.read<IncompleteTaskBloc>().add(TaskDeleted(id));
+                    }
                     );
                   } else if (state is TaskFetchedFailure) {
                     return ErrorFailureWidget(message: state.message);

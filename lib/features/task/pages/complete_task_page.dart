@@ -34,7 +34,7 @@ class _CompleteTaskPageState extends State<CompleteTaskPage> {
           children: [
             const SizedBox(height: 16.0),
             Text(
-              'Complete',
+              '完成',
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     color: ColorName.primary,
                     fontWeight: FontWeight.bold,
@@ -44,6 +44,11 @@ class _CompleteTaskPageState extends State<CompleteTaskPage> {
             Expanded(
               child: BlocConsumer<CompleteTaskBloc, TaskState>(
                 listener: (context, state) {
+                  if (state is TaskDeletedSuccess  || state is TaskDeletedSuccess) {
+                    context.read<AllTaskBloc>().add(const TaskFetched());
+                    context.read<CompleteTaskBloc>().add(const TaskFetched(isDone: true));
+                    context.read<IncompleteTaskBloc>().add(const TaskFetched(isDone: false));
+                  }
                   if (state is TaskCreatedSuccess || state is TaskUpdatedSuccess) {
                     context.read<AllTaskBloc>().add(const TaskFetched());
                     context.read<CompleteTaskBloc>().add(const TaskFetched(isDone: true));
@@ -67,7 +72,9 @@ class _CompleteTaskPageState extends State<CompleteTaskPage> {
                               id: id,
                               isDone: value,
                             ));
-                      },
+                      },onDeleteTap: (id) {
+                      context.read<CompleteTaskBloc>().add(TaskDeleted(id));
+                    }
                     );
                   } else if (state is TaskFetchedFailure) {
                     return ErrorFailureWidget(message: state.message);

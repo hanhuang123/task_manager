@@ -8,19 +8,21 @@ import 'package:todo/repos/task/task_repository.dart';
 import 'package:uuid/uuid.dart';
 
 part 'task_event.dart';
-
 part 'task_state.dart';
 
 class AllTaskBloc extends TaskBloc {
-  AllTaskBloc({required super.taskRepository});
+  AllTaskBloc({required ITaskRepository taskRepository})
+      : super(taskRepository: taskRepository);
 }
 
 class CompleteTaskBloc extends TaskBloc {
-  CompleteTaskBloc({required super.taskRepository});
+  CompleteTaskBloc({required ITaskRepository taskRepository})
+      : super(taskRepository: taskRepository);
 }
 
 class IncompleteTaskBloc extends TaskBloc {
-  IncompleteTaskBloc({required super.taskRepository});
+  IncompleteTaskBloc({required ITaskRepository taskRepository})
+      : super(taskRepository: taskRepository);
 }
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
@@ -32,12 +34,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<TaskFetched>(_onTaskFetched);
     on<TaskCreated>(_onTaskCreated);
     on<TaskUpdated>(_onTaskUpdated);
+    on<TaskDeleted>(_onTaskDeleted);
   }
 
-  FutureOr<void> _onTaskFetched(
-    TaskFetched event,
-    Emitter<TaskState> emit,
-  ) async {
+  Future<void> _onTaskFetched(TaskFetched event, Emitter<TaskState> emit) async {
     emit(const TaskFetchedInProgress());
 
     final result = await _taskRepository.getTasks(isDone: event.isDone);
@@ -45,7 +45,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     result.when(
       success: (tasks) {
         tasks.sort(
-          (a, b) {
+              (a, b) {
             if (a.createdAt != null && b.createdAt != null) {
               return b.createdAt!.compareTo(a.createdAt!);
             }
@@ -58,10 +58,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     );
   }
 
-  FutureOr<void> _onTaskCreated(
-    TaskCreated event,
-    Emitter<TaskState> emit,
-  ) async {
+  Future<void> _onTaskCreated(TaskCreated event, Emitter<TaskState> emit) async {
     emit(const TaskCreatedInProgress());
 
     final task = Task(
@@ -79,7 +76,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     );
   }
 
-  FutureOr<void> _onTaskUpdated(TaskUpdated event, Emitter<TaskState> emit) async {
+  Future<void> _onTaskUpdated(TaskUpdated event, Emitter<TaskState> emit) async {
     emit(const TaskUpdatedInProgress());
 
     final getTaskResult = await _taskRepository.getTask(id: event.id);
@@ -104,4 +101,16 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       },
     );
   }
+
+  Future<void> _onTaskDeleted(TaskDeleted event, Emitter<TaskState> emit) async {
+    emit(const TaskDeletedInProgress());
+
+    final deleteTaskResult = await _taskRepository.deleteTask(id: event.taskId);
+
+    deleteTaskResult.when(
+      success: (_) => emit(const TaskDeletedSuccess()),
+      failure: (failure) => emit(TaskDeletedFailure(message: failure.message)),
+    );
+  }
+
 }

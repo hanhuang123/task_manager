@@ -13,7 +13,7 @@ class ErrorFailureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        message ?? 'Well, error happens! 😭',
+        message ?? 'error!',
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: ColorName.primary,

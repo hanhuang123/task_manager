@@ -10,7 +10,7 @@ class TextLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        "Please wait it's happening... ✨",
+        "請稍後~",
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.headlineSmall!.copyWith(
           color: ColorName.primary,

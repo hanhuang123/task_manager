@@ -16,4 +16,6 @@ abstract class ITaskRepository {
   Future<Result<Task, Failure>> updateTask({
     required Task task,
   });
+
+  Future<Result<void, Failure>> deleteTask({required String id});
 }
