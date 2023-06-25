@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3f519f4f-701a-4608-ada6-d009e0ada76f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Podfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
